@@ -27,7 +27,7 @@ app.use(express.json());
 //MongoDB Connection
 mongoose.Promise = global.Promise;
 const uri = `mongodb+srv://${username}:${password}@${hostname}/${dbName}?${dbOptions}`;
-mongoose.connect(uri,  {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(uri,  {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
 
 app.use(router);
 app.listen(port, () => {
