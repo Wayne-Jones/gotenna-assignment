@@ -4,8 +4,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node -e js",
-    "prod": "set NODE_ENV=production && nodemon start",
-    "dev": "set NODE_ENV=development && nodemon start"
+    "seed": "nodemon --exec babel-node ./seed/seed.js"
   },
   "license": "MIT",
   "dependencies": {
