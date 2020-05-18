@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./server.js --exec babel-node -e js",
+    "start": "nodemon --exec babel-node ./server.js",
     "seed": "nodemon --exec babel-node ./seed/seed.js"
   },
   "license": "MIT",
