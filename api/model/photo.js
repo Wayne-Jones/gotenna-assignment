@@ -10,7 +10,6 @@ const schema = new Schema({
     photoID: {
         type: String, 
         required: true, 
-        unique: true,
     }, 
     width:  {
         type: String,
