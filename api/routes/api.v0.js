@@ -1,12 +1,16 @@
 import express from 'express';
-import {getPhotos, addPhoto} from '../controller/photo';
+import {getPhotos, addPhoto, getPhotoByUID, modifyPhoto} from '../controller/photo';
 
 const router = express.Router();
 
 
 router.route('/photo')
     .post(addPhoto)
-    .get(getPhotos);
+    .get(getPhotos)
+    .patch(modifyPhoto);
+
+router.route('/photo/:id')
+    .get(getPhotoByUID);
 
 // router.route('/id/:id')
 //     .get(getPhotoByID)
