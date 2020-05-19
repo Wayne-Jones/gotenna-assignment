@@ -8,15 +8,15 @@ const schema = new Schema({
         required: true,
     },
     photoID: {
-        type: String, 
+        type: Number, 
         required: true, 
     }, 
     width:  {
-        type: String,
+        type: Number,
         required: true,
     },
     height:  {
-        type: String,
+        type: Number,
         required: true,
     },
     greyscale: {
