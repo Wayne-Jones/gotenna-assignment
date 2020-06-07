@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactGallery from 'react-grid-gallery';
-import { Grid, Slider, Typography } from '@material-ui/core';
+import {
+  Grid, Slider, Typography, Switch,
+} from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
 function Gallery() {
@@ -9,6 +11,31 @@ function Gallery() {
   const [page, setPage] = useState(1);
   const [widthRange, setWidthRange] = useState([0, 500]);
   const [heightRange, setHeightRange] = useState([0, 500]);
+  const [greyscale, setGreyscale] = useState(false);
+
+
+  const formatObj = (img) => {
+    const {
+      url, width, height, photoID, greyscale,
+    } = img;
+
+    const thumbWidth = 100;
+    const thumbHeight = 100;
+
+    let newURL = url.concat(photoID, '/', width, '/', height);
+    if (greyscale === true) {
+      newURL = newURL.concat('?greyscale');
+    }
+    setGalleryImg((state) => [...state, {
+      src: newURL, thumbnail: newURL, thumbnailWidth: thumbWidth, thumbnailHeight: thumbHeight,
+    }]);
+  };
+
+  const greyscaleTrigger = (boolValue) => {
+    const url = `http://localhost:4000/api/v0/photo?greyscale=${boolValue}`;
+    fetch(url, { method: 'PATCH' });
+    setGreyscale(boolValue);
+  };
 
   const fetchImages = () => {
     let url = 'http://localhost:4000/api/v0/photo';
@@ -33,31 +60,18 @@ function Gallery() {
   const loadPage = (currentPage) => {
     setPage(currentPage);
   };
+
   const loadWidthFilter = (filterRange) => {
     setWidthRange(filterRange);
   };
+
   const loadHeightFilter = (filterRange) => {
     setHeightRange(filterRange);
   };
-  const formatObj = (img) => {
-    const {
-      url, width, height, photoID, greyscale,
-    } = img;
 
-    const thumbWidth = 100;
-    const thumbHeight = 100;
-
-    const newURL = url.concat(photoID, '/', width, '/', height);
-    if (greyscale === true) {
-      newURL.concat('?greyscale');
-    }
-    setGalleryImg((state) => [...state, {
-      src: newURL, thumbnail: newURL, thumbnailWidth: thumbWidth, thumbnailHeight: thumbHeight,
-    }]);
-  };
   useEffect(() => {
     fetchImages();
-  }, [page, widthRange, heightRange]);
+  }, [page, widthRange, heightRange, greyscale]);
 
   return (
     <>
@@ -81,7 +95,10 @@ function Gallery() {
             valueLabelDisplay="auto"
             max={500}
           />
-
+        </Grid>
+        <Grid container item xs={6}>
+          <Typography gutterBottom>Greyscale Switch</Typography>
+          <Switch color="primary" checked={greyscale} onChange={(event) => greyscaleTrigger(event.target.checked)} inputProps={{ 'aria-label': 'Greyscale checkbox' }} />
         </Grid>
       </Grid>
     </>
